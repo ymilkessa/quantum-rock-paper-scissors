@@ -1,0 +1,9 @@
+.battlefield {
+  height: 30vh;
+  background-color: #50577a;
+  margin-left: 10%;
+  margin-right: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

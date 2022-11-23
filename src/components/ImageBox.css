@@ -1,0 +1,22 @@
+.image-box {
+  display: inline;
+  border-radius: 5%;
+  border: solid black 0.2vh;
+  height: 12vh;
+}
+
+.selected {
+  background-color: lightblue;
+}
+
+.quantum-theme {
+  /* background-color: lightgoldenrodyellow; */
+}
+
+.user-theme {
+  /* background-color: lightcyan; */
+}
+
+.image-box img {
+  height: 12vh;
+}
