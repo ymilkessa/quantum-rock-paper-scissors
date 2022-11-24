@@ -2,7 +2,12 @@ import { MODES } from "./constants";
 import ImageBox from "./ImageBox";
 import "./OptionsBoard.css";
 
-const OptionsBoard = ({ selector, selection, isThisTheUser = false }) => {
+const OptionsBoard = ({
+  selector,
+  selection,
+  currentState,
+  isThisTheUser = false,
+}) => {
   // Add another class to denote human vs computer sides.
   const elements = Object.keys(MODES).map((mode) => {
     const extraStyles = selection === mode ? ["selected"] : [];
@@ -10,6 +15,7 @@ const OptionsBoard = ({ selector, selection, isThisTheUser = false }) => {
       <ImageBox
         mode={mode}
         selector={selector}
+        currentState={currentState}
         isThisTheUser={isThisTheUser}
         extraStyles={extraStyles}
       />
