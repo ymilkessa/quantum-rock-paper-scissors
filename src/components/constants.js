@@ -7,9 +7,10 @@ export const MODES = {
 export const MODE_VALUES = [MODES.ROCK, MODES.PAPER, MODES.SCISSORS];
 
 export const GAME_STATES = {
-  SELECT_MODE: 0,
-  COMPUTING_RESULT: 1,
-  POST_ROUND: 2,
+  WAITING_SELECTION: 0,
+  SELECT_MODE: 1,
+  COMPUTING_RESULT: 2,
+  POST_ROUND: 3,
 };
 
 export const PLAYERS = {

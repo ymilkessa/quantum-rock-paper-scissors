@@ -6,6 +6,7 @@ const OptionsBoard = ({
   selector,
   selection,
   currentState,
+  setGameState,
   isThisTheUser = false,
 }) => {
   // Add another class to denote human vs computer sides.
@@ -16,6 +17,7 @@ const OptionsBoard = ({
         mode={mode}
         selector={selector}
         currentState={currentState}
+        setGameState={setGameState}
         isThisTheUser={isThisTheUser}
         extraStyles={extraStyles}
       />

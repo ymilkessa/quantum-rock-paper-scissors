@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Helvetica", "sans-serif";
+  font-family: "Courier", "monospace";
   background-color: #404258;
   color: whitesmoke;
 }

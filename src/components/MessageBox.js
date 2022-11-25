@@ -13,10 +13,15 @@ const MessageBox = ({
   let buttonCaption = "";
   let messageThemes = [];
   switch (currentState) {
-    case GAME_STATES.SELECT_MODE:
+    case GAME_STATES.WAITING_SELECTION:
       if (player === PLAYERS.USER) {
         messageToDisplay = "What will you go with?";
-        buttonCaption = `Confirm ${MODES[selection]}`;
+      }
+      break;
+    case GAME_STATES.SELECT_MODE:
+      if (player === PLAYERS.USER) {
+        messageToDisplay = `Confirm ${MODES[selection]}?`;
+        buttonCaption = `Confirm`;
         buttonAction = () => setGameState(GAME_STATES.COMPUTING_RESULT);
       }
       break;
@@ -45,7 +50,9 @@ const MessageBox = ({
       <div class={textClasses}>{messageToDisplay}</div>
       <div class="message-box-content">
         {buttonAction ? (
-          <button onClick={buttonAction}>{buttonCaption}</button>
+          <button onClick={buttonAction} class="confirm-button">
+            {buttonCaption}
+          </button>
         ) : null}
       </div>
     </div>

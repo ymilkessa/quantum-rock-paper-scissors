@@ -7,6 +7,7 @@ const ImageBox = ({
   mode,
   selector = null,
   currentState,
+  setGameState,
   isThisTheUser = false,
   extraStyles = [],
 }) => {
@@ -15,8 +16,13 @@ const ImageBox = ({
   const imageName = MODES[mode];
 
   const makeSelection = () => {
-    if (selector && currentState === GAME_STATES.SELECT_MODE) {
+    if (
+      currentState === GAME_STATES.SELECT_MODE ||
+      currentState === GAME_STATES.WAITING_SELECTION
+    ) {
       selector(mode);
+      if (currentState === GAME_STATES.WAITING_SELECTION)
+        setGameState(GAME_STATES.SELECT_MODE);
     }
   };
 

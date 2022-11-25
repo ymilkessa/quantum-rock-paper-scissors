@@ -15,15 +15,10 @@ import MessageBox from "./MessageBox";
 const GameBox = () => {
   const [userSelection, setUserSelection] = useState(null);
   const [randomSelection, setRandomSelection] = useState(null);
-  const [currentState, setGameState] = useState(GAME_STATES.SELECT_MODE);
+  const [currentState, setGameState] = useState(GAME_STATES.WAITING_SELECTION);
   const [gameWinner, setGameWinner] = useState(null);
 
-  useEffect(() => {
-    console.log(userSelection);
-    console.log(randomSelection);
-  }, [userSelection, randomSelection]);
-
-  // Effect to fetch and set option for quantum computer
+  // This effect is for setting the option for quantum computer
   useEffect(() => {
     if (currentState !== GAME_STATES.COMPUTING_RESULT) {
       return;
@@ -34,12 +29,17 @@ const GameBox = () => {
         while (randomIndex === null) {
           randomIndex = await getRandomIndexForGame();
         }
-        if (currentState !== GAME_STATES.COMPUTING_RESULT)
-          setRandomSelection(MODE_VALUES[randomIndex]);
+        console.log(
+          `YOFTI-LOGS: New selection to be set\n${randomIndex}, ${MODE_VALUES[randomIndex]}`
+        );
+        if (currentState === GAME_STATES.COMPUTING_RESULT) {
+          await setRandomSelection(MODE_VALUES[randomIndex]);
+          console.log(`YOFTI-LOGS: Set random selection\n${randomSelection}`);
+        }
       }
     }
     setQuantumSelection();
-  }, [currentState]);
+  }, [currentState, randomSelection]);
 
   // Effect to declare winner/loser after both selection are made
   useEffect(() => {
@@ -56,10 +56,13 @@ const GameBox = () => {
     setGameState(GAME_STATES.POST_ROUND);
   }, [userSelection, randomSelection]);
 
+  /**
+   * Emplties selections and sets game to the beginning.
+   */
   const restartGame = () => {
     setUserSelection(null);
     setRandomSelection(null);
-    setGameState(GAME_STATES.SELECT_MODE);
+    setGameState(GAME_STATES.WAITING_SELECTION);
   };
 
   return (
@@ -68,6 +71,7 @@ const GameBox = () => {
         selector={setRandomSelection}
         selection={randomSelection}
         currentState={currentState}
+        setGameState={setGameState}
         isThisTheUser={false}
       />
       <MessageBox
@@ -94,6 +98,7 @@ const GameBox = () => {
         selector={setUserSelection}
         selection={userSelection}
         currentState={currentState}
+        setGameState={setGameState}
         isThisTheUser={true}
       />
     </div>
