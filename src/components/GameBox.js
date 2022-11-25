@@ -20,22 +20,18 @@ const GameBox = () => {
 
   // This effect is for setting the option for quantum computer
   useEffect(() => {
-    if (currentState !== GAME_STATES.COMPUTING_RESULT) {
+    if (currentState !== GAME_STATES.GETTING_RANDOM_NUMBER) {
       return;
     }
+
     async function setQuantumSelection() {
-      if (currentState === GAME_STATES.COMPUTING_RESULT) {
+      if (currentState === GAME_STATES.GETTING_RANDOM_NUMBER) {
         let randomIndex = null;
+        setGameState(GAME_STATES.COMPUTING_RESULT);
         while (randomIndex === null) {
           randomIndex = await getRandomIndexForGame();
         }
-        console.log(
-          `YOFTI-LOGS: New selection to be set\n${randomIndex}, ${MODE_VALUES[randomIndex]}`
-        );
-        if (currentState === GAME_STATES.COMPUTING_RESULT) {
-          await setRandomSelection(MODE_VALUES[randomIndex]);
-          console.log(`YOFTI-LOGS: Set random selection\n${randomSelection}`);
-        }
+        setRandomSelection(MODE_VALUES[randomIndex]);
       }
     }
     setQuantumSelection();
@@ -48,11 +44,12 @@ const GameBox = () => {
     }
     if (userSelection === randomSelection) {
       setGameWinner(GAME_RESULT.TIE);
+    } else {
+      const didUserWin = DOES_A_BEAT_B[userSelection + randomSelection];
+      didUserWin
+        ? setGameWinner(GAME_RESULT.USER)
+        : setGameWinner(GAME_RESULT.QRNG);
     }
-    const didUserWin = DOES_A_BEAT_B[userSelection + randomSelection];
-    didUserWin
-      ? setGameWinner(GAME_RESULT.USER)
-      : setGameWinner(GAME_RESULT.QRNG);
     setGameState(GAME_STATES.POST_ROUND);
   }, [userSelection, randomSelection]);
 
@@ -80,6 +77,7 @@ const GameBox = () => {
         setGameState={setGameState}
         player={PLAYERS.QRNG}
         gameWinner={gameWinner}
+        restartGame={null}
       />
       <BattleField
         userSelection={userSelection}
@@ -93,6 +91,7 @@ const GameBox = () => {
         setGameState={setGameState}
         player={PLAYERS.USER}
         gameWinner={gameWinner}
+        restartGame={restartGame}
       />
       <OptionsBoard
         selector={setUserSelection}

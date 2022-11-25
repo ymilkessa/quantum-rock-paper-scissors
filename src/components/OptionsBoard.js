@@ -10,7 +10,7 @@ const OptionsBoard = ({
   isThisTheUser = false,
 }) => {
   // Add another class to denote human vs computer sides.
-  const elements = Object.keys(MODES).map((mode) => {
+  const elements = Object.values(MODES).map((mode) => {
     const extraStyles = selection === mode ? ["selected"] : [];
     return (
       <ImageBox
@@ -20,6 +20,7 @@ const OptionsBoard = ({
         setGameState={setGameState}
         isThisTheUser={isThisTheUser}
         extraStyles={extraStyles}
+        key={mode + isThisTheUser}
       />
     );
   });

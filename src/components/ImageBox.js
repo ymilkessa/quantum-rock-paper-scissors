@@ -1,6 +1,4 @@
-import { useState } from "react";
-import Draggable from "react-draggable";
-import { GAME_STATES, MODES } from "./constants";
+import { GAME_STATES } from "./constants";
 import "./ImageBox.css";
 
 const ImageBox = ({
@@ -12,8 +10,7 @@ const ImageBox = ({
   extraStyles = [],
 }) => {
   // Create variables for the coordinates of this object.
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const imageName = MODES[mode];
+  const imageName = mode;
 
   const makeSelection = () => {
     if (
@@ -30,21 +27,12 @@ const ImageBox = ({
   let styleClasses = `image-box`;
   extraStyles.forEach((styleClass) => (styleClasses += ` ${styleClass}`));
   return (
-    <Draggable
-      // Disable dragging until we figure out how to use it
-      disabled={true}
-      onDrag={(_error, data) => {
-        setPosition({ x: data.x, y: data.y });
-        console.log(JSON.stringify(position));
-      }}
+    <div
+      className={styleClasses}
+      onClick={isThisTheUser ? makeSelection : null}
     >
-      <div
-        className={styleClasses}
-        onClick={isThisTheUser ? makeSelection : null}
-      >
-        <img src={theImage} alt={imageName} />
-      </div>
-    </Draggable>
+      <img src={theImage} alt={imageName} />
+    </div>
   );
 };
 

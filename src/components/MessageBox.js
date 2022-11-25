@@ -1,5 +1,5 @@
 import "./MessageBox.css";
-import { GAME_STATES, MODES, PLAYERS } from "./constants";
+import { GAME_RESULT, GAME_STATES, PLAYERS } from "./constants";
 
 const MessageBox = ({
   currentState,
@@ -7,6 +7,7 @@ const MessageBox = ({
   setGameState,
   player = PLAYERS.QRNG,
   gameWinner = null,
+  restartGame = null,
 }) => {
   let messageToDisplay = "";
   let buttonAction = null;
@@ -20,24 +21,34 @@ const MessageBox = ({
       break;
     case GAME_STATES.SELECT_MODE:
       if (player === PLAYERS.USER) {
-        messageToDisplay = `Confirm ${MODES[selection]}?`;
+        messageToDisplay = `Confirm ${selection}?`;
         buttonCaption = `Confirm`;
-        buttonAction = () => setGameState(GAME_STATES.COMPUTING_RESULT);
+        buttonAction = () => setGameState(GAME_STATES.GETTING_RANDOM_NUMBER);
       }
+      break;
+    case GAME_STATES.GETTING_RANDOM_NUMBER:
+      if (player === PLAYERS.QRNG)
+        messageToDisplay = "... Preparing to send request ...";
       break;
     case GAME_STATES.COMPUTING_RESULT:
       if (player === PLAYERS.QRNG)
-        messageToDisplay = "Making random selection...";
+        messageToDisplay = "Getting random number from QRNG...";
       break;
     case GAME_STATES.POST_ROUND:
-      const thisPlayerWon = gameWinner === player;
-      if (thisPlayerWon) {
+      if (gameWinner === player) {
         messageThemes.push("victory-theme");
         messageToDisplay =
-          player === PLAYERS.USER ? "You won!!" : "~I~beat~you~";
+          player === PLAYERS.USER ? "You won!!" : "~~QRNG Wins~~";
+      } else if (gameWinner === GAME_RESULT.TIE) {
+        messageToDisplay =
+          player === PLAYERS.USER ? "Tied, try again" : "~~Tied~~";
       } else {
         messageToDisplay =
           player === PLAYERS.USER ? "Sorry, try again" : "__:(__";
+      }
+      if (player === PLAYERS.USER) {
+        buttonCaption = "New Game";
+        buttonAction = restartGame || null;
       }
       break;
     default:
@@ -46,11 +57,11 @@ const MessageBox = ({
   let textClasses = "message-box-content";
   messageThemes.forEach((theme) => (textClasses += ` ${theme}`));
   return (
-    <div class="message-box">
-      <div class={textClasses}>{messageToDisplay}</div>
-      <div class="message-box-content">
+    <div className="message-box">
+      <div className={textClasses}>{messageToDisplay}</div>
+      <div className="message-box-content">
         {buttonAction ? (
-          <button onClick={buttonAction} class="confirm-button">
+          <button onClick={buttonAction} className="confirm-button">
             {buttonCaption}
           </button>
         ) : null}

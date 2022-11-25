@@ -13,7 +13,6 @@ const getRandomNumbers = async (n) => {
   const { data } = await axios.get(
     `https://qrng.anu.edu.au/API/jsonI.php?length=${n}&type=uint8`
   );
-  console.log(`YOFTI-LOGS: all numbers\n${JSON.stringify(data, null, 4)}`);
 
   return data;
 };
@@ -27,6 +26,5 @@ export const getRandomIndexForGame = async (count = 0) => {
   if (!success && count < 4) {
     return await getRandomIndexForGame(count + 1);
   }
-  console.log(`YOFTI-LOGS: Random Number\n${data?.[0]}`);
   return success ? floor((3 * data?.[0]) / UINT_CARDINALITY) : null;
 };

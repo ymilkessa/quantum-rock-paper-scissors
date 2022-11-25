@@ -3,12 +3,13 @@
   background-color: #50577a;
   margin-left: 10%;
   margin-right: 10%;
+  display: flex;
 }
 
 .battle-side {
   width: 50%;
   height: 30vh;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
 }
