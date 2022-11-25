@@ -38,13 +38,13 @@ const MessageBox = ({
       if (gameWinner === player) {
         messageThemes.push("victory-theme");
         messageToDisplay =
-          player === PLAYERS.USER ? "You won!!" : "~~QRNG Wins~~";
+          player === PLAYERS.USER ? "You won!!" : "~~ QRNG Wins ~~";
       } else if (gameWinner === GAME_RESULT.TIE) {
         messageToDisplay =
-          player === PLAYERS.USER ? "Tied, try again" : "~~Tied~~";
+          player === PLAYERS.USER ? "Tied, try again" : "~~ Tied ~~";
       } else {
         messageToDisplay =
-          player === PLAYERS.USER ? "Sorry, try again" : "__:(__";
+          player === PLAYERS.USER ? "Sorry, try again" : "__ :( __";
       }
       if (player === PLAYERS.USER) {
         buttonCaption = "New Game";
