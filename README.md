@@ -1,4 +1,4 @@
-# Rock paper scissors agains quantum random numbers
+# Rock paper scissors against quantum random numbers
 
 #### This game is currently running on [yofti.xyz/rpc](https://www.yofti.xyz/rpc)
 
